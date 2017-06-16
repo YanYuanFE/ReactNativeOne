@@ -6,6 +6,8 @@ import {
   Text,
 } from 'react-native';
 
+import OneFlatList from '../component/OneFlatList';
+
 import { GET_DATA_ARRAY, GET_DAY_LIST } from '../api/API';
 
 
@@ -17,7 +19,7 @@ export default class OneScene extends Component {
       num: 0,
       weather: null,
       dataArr: [],
-      dataOne: {},
+      dataOne: null,
     };
   }
 
@@ -29,6 +31,7 @@ export default class OneScene extends Component {
     fetch(GET_DATA_ARRAY)
       .then(res => res.json())
       .then(res => {
+        console.log(res)
         this.setState({
           dataArr: res.data
         });
@@ -64,7 +67,8 @@ export default class OneScene extends Component {
       .then(res => {
         console.log(res);
         let data = res.data;
-        data.weather.date = data.date.split('')[0].replace('-','/');
+        data.weather.date = data.date.split('')[0].replace('/', ' / ');
+        console.log(data)
 
         this.setState({
           dataOne: data.content_list,
@@ -80,7 +84,11 @@ export default class OneScene extends Component {
     const appNavigation = this.props.screenProps.appNavigation;
 
     return (
-      <View><Text>Hello</Text></View>
+      <OneFlatList
+        appNavigation = {appNavigation}
+        weather = {this.state.weather}
+        data = {this.state.dataOne}
+      />
     )
   }
 
@@ -93,6 +101,7 @@ export default class OneScene extends Component {
   }
 
   render() {
+    console.log(this.state.dataOne == true)
     return this.state.dataOne ? this.renderDataList() : this.renderLoadingView();
   }
 

@@ -119,15 +119,11 @@ const HomeNav = TabNavigator({
     navigationOptions: {
       tabBarIcon: ({ focused, tintColor }) => (
         <Image
-          source={focused ? readIconActive : readIcon}
+          source={focused ? homeIconActive : homeIcon}
           style={[styles.tabIcon, {tintColor: tintColor}]}
         />
       ),
     }
-  },
-  Home: {
-    title:'一个',
-    screen: Home,
   },
   Read: {
     title:'一个阅读',
