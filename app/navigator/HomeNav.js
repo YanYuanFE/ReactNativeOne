@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Image,
+  Button,
 } from 'react-native';
 import { StackNavigator,TabNavigator } from 'react-navigation';
+
+import OneScene from '../scene/OneScene';
 
 
 const homeIcon = require('../images/home.png');
@@ -110,7 +113,18 @@ const styles = StyleSheet.create({
   },
 });
 
-const MyApp = TabNavigator({
+const HomeNav = TabNavigator({
+  One: {
+    screen: OneScene,
+    navigationOptions: {
+      tabBarIcon: ({ focused, tintColor }) => (
+        <Image
+          source={focused ? readIconActive : readIcon}
+          style={[styles.tabIcon, {tintColor: tintColor}]}
+        />
+      ),
+    }
+  },
   Home: {
     title:'一个',
     screen: Home,
@@ -140,3 +154,5 @@ const MyApp = TabNavigator({
     }
   },
 });
+
+export default HomeNav;
