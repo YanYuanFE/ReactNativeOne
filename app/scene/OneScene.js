@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import OneFlatList from '../component/OneFlatList';
+import MyListView from '../component/MyListView';
 
 import { GET_DATA_ARRAY, GET_DAY_LIST } from '../api/API';
 
@@ -67,8 +68,8 @@ export default class OneScene extends Component {
       .then(res => {
         console.log(res);
         let data = res.data;
-        data.weather.date = data.date.split('')[0].replace('/', ' / ');
-        console.log(data)
+        data.weather.date = data.date.split(' ')[0];
+        console.log(data.date.split(' ')[0])
 
         this.setState({
           dataOne: data.content_list,

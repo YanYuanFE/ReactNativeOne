@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
   FlatList,
   StyleSheet,
+  Text
 } from 'react-native';
 
 import OneListItem from './OneListItem';
@@ -17,7 +18,7 @@ export default class OneFlatList extends Component {
     }
   }
 
-  _keyExtractor = (item, index) => item.id;
+  _keyExtractor = (item, index) => index;
 
   _onPressItem = id => {
 
@@ -38,9 +39,8 @@ export default class OneFlatList extends Component {
   render () {
     return (
       <FlatList 
-        data = {this.props.data}
-        extraData = {this.state}
         keyExtractor = {this._keyExtractor}
+        data = {this.props.data}
         renderItem = {this._renderItem}
       />
     )
