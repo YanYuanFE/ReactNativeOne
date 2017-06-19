@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import OneListItem from './OneListItem';
+import ContentItem from './ContentItem';
 
 
 export default class OneFlatList extends Component {
@@ -25,13 +26,20 @@ export default class OneFlatList extends Component {
   }
 
   _renderItem = ({item}) => {
-    return item.content_type == 0 ? this.renderOne(item) : null;
+    return item.content_type == 0 ? this.renderOne(item) : this.renderContent(item);
   };
 
   renderOne = item => (
     <OneListItem
       appNavigation = {this.props.appNavigation}
       weather = {this.props.weather}
+      data = {item}
+    />
+  )
+
+  renderContent = item => (
+    <ContentItem
+      onPress={this.onPress}
       data = {item}
     />
   )

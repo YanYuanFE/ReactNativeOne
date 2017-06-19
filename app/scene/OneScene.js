@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 
 import OneFlatList from '../component/OneFlatList';
-import MyListView from '../component/MyListView';
 
 import { GET_DATA_ARRAY, GET_DAY_LIST } from '../api/API';
 
