@@ -25,6 +25,10 @@ export default class OneFlatList extends Component {
 
   }
 
+  onPress = () => {
+    
+  }
+
   _renderItem = ({item}) => {
     return item.content_type == 0 ? this.renderOne(item) : this.renderContent(item);
   };

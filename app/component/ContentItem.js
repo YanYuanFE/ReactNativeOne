@@ -9,6 +9,11 @@ import {
     TouchableWithoutFeedback,
     ToastAndroid,
 } from 'react-native';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
+// 在react-native 设置moment.locale('zh-cn')无效，只能通过改moment.js源文件中的baseConfig配置中文
+// console.log(moment.locale());
 
 export default class ContentItem extends Component {
     
@@ -27,6 +32,25 @@ export default class ContentItem extends Component {
         this.widthM2 = this.width / 2;
     }
 
+    ComponentDidMount() {
+        Image.getSize(this.props.data.img_url, this.getSizeSuccess(), this.getSizeFailure);
+    }
+
+    getSizeSuccess = () => {
+        const that = this;
+
+        return (width, height) => {
+            heigth = ((that.windowWidth - 20) / that.width) * height;
+            that.setState({
+                imgHeight: height,
+            })
+        }
+    }
+
+    getSizeFailure = error => {
+        alert(`get img size failure => ${error}`);
+    }
+
     getData = data => ({
         contentType: data.content_type,
         movieName: data.content_type == this.contentMovie ? data.subtitle : 'unknow',
@@ -35,7 +59,7 @@ export default class ContentItem extends Component {
         author: data.share_list.wx.desc.split(' ')[0].replace('/', ' / '),
         imgUrl: data.img_url,
         content: data.forward,
-        time: 'n小时前',
+        time: moment(data.post_date, 'YYYY-MM-DD hh:mm:ss').fromNow(),
         likeCount: data.like_count,
         url: data.share_info.url,
         musicInfo: `${data.music_name} · ${data.audio_author} | ${data.audio_album}`,
@@ -44,6 +68,7 @@ export default class ContentItem extends Component {
     render() {
         console.log(this.props);
         const data = this.getData(this.props.data);
+        console.log(data)
         return (
             <TouchableWithoutFeedback
                 onPress={() => this.props.onPress(data.url, data.type)}>
@@ -52,7 +77,7 @@ export default class ContentItem extends Component {
                     <Text style={[styles.titleText, {width: this.width}]}>{data.title}</Text>
                     <Text style={[styles.authorText, {width: this.width}]}>{data.author}</Text>
                     {
-                        data.contentType == this.contentMovie ? (
+                        data.contentType == this.contentMusic ? (
                             <View style={[styles.musicBox, {width: this.width, height: this.widthM2}]}>
                                 <View>
                                     <Image 
@@ -72,6 +97,29 @@ export default class ContentItem extends Component {
                                 source={{uri: data.imgUrl}}/>
                         )
                     }
+                    <Text style={data.contentType == this.contentMusic ? [styles.musicNameText,  {width: this.width}] : {height: 0}}>{data.musicInfo}</Text>
+                    <Text style={[styles.contentText, {width: this.width}]}>{data.content}</Text>
+                    <Text style={data.contentType == this.contentMovie ? [styles.movieNameText, {width: this.width}]: {height: 0}}>{`-- 《${data.movieName}》`}</Text>
+                    <View style={styles.bottomView}>
+                        <Text style={styles.bottomText}>{data.time}</Text>
+                        <View style={{flex: 1}}/>
+                        <TouchableWithoutFeedback onPress={this.pressLike}>
+                            <View style={{flexDirection: 'row'}}>
+                                <Text style={styles.bottomText}>{data.likeCount}</Text>
+                                <Image 
+                                    style={styles.bottomImg}
+                                    source={require('../images/bubble_like.png')}/>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <View style={{width: 20}}/>
+                        <TouchableWithoutFeedback onPress={this.pressShare}>
+                            <View style={{flexDirection: 'row'}}>
+                                <Image 
+                                    style={styles.bottomImg}
+                                    source={require('../images/bubble_share.png')}/>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </View>
                 </View>
 
             </TouchableWithoutFeedback>
@@ -107,9 +155,6 @@ const styles = StyleSheet.create({
         marginTop: 8,
         marginBottom: 8,
     },
-    contentText: {
-        fontSize: 13,
-    },
     musicBox: {
         flexDirection: 'row',
     },
@@ -121,5 +166,37 @@ const styles = StyleSheet.create({
     },
     musicRightImg: {
         alignSelf: 'flex-end',
+    },
+    musicNameText: {
+        marginTop: 8,
+        fontSize: 12,
+        color: '#BBBBBB',
+    },
+    contentText: {
+        fontSize: 13,
+        color: '#999999',
+        lineHeight: 26
+    },
+    movieNameText: {
+        textAlign: 'right',
+        fontSize: 14,
+        color: '#999999',
+    },
+    bottomView: {
+        flex: 1,
+        flexDirection: 'row',
+        marginTop: 8,
+    },
+    bottomText: {
+        height: 18,
+        fontSize: 11,
+        color: '#BBBBBB',
+        marginRight: 5,
+        lineHeight: 17,
+    },
+    bottomImg: {
+        width: 18,
+        height: 18,
     }
+
 })
