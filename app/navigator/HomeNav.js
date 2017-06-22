@@ -7,6 +7,8 @@ import {
 import { StackNavigator,TabNavigator } from 'react-navigation';
 
 import OneScene from '../scene/OneScene';
+import ReadScene from '../scene/ReadScene';
+import MovieScene from '../scene/MovieScene';
 
 
 const homeIcon = require('../images/home.png');
@@ -126,8 +128,15 @@ const HomeNav = TabNavigator({
     }
   },
   Read: {
-    title:'一个阅读',
-    screen: Read,
+    screen: ReadScene,
+    navigationOptions: {
+      tabBarIcon: ({ focused, tintColor }) => (
+        <Image
+          source={focused ? readIconActive : readIcon}
+          style={[styles.tabIcon, {tintColor: tintColor}]}
+        />
+      ),
+    }
   },
   Music: {
     title:'一个音乐',
@@ -135,7 +144,15 @@ const HomeNav = TabNavigator({
   },
   Movie: {
     title:'一个影视',
-    screen:Movie
+    screen:MovieScene,
+    navigationOptions: {
+      tabBarIcon: ({ focused, tintColor }) => (
+        <Image
+          source={focused ? movieIconActive : movieIcon}
+          style={[styles.tabIcon, {tintColor: tintColor}]}
+        />
+      ),
+    }
   }
 }, {
   tabBarPosition:'bottom',

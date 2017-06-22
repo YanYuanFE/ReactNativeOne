@@ -11,8 +11,9 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
-moment.locale('zh-cn');
-// 在react-native 设置moment.locale('zh-cn')无效，只能通过改moment.js源文件中的baseConfig配置中文
+// moment.locale('zh-cn');
+// 在react-native 设置moment.locale('zh-cn')无效，
+// 只能通过改moment.js源文件中的baseConfig配置中文
 
 import MusicView from './MusicView';
 

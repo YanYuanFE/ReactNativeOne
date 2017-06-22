@@ -63,7 +63,7 @@ export default class OneListItem extends Component {
           <View style={styles.imgBox}>
             <Image
               source={{uri: data.img_url}}
-              style={[styles.imgStyle, {height: this.state.imgHeight}, {width: this.windowWidth}]}
+              style={{height: this.state.imgHeight , width: this.windowWidth}}
             />
             <Text style={styles.volText}>{data.volume}</Text>
           </View>
@@ -122,9 +122,6 @@ const styles = StyleSheet.create({
     marginTop: 7,
     marginBottom: 8,
     position: 'relative'
-  },
-  imgStyle: {
-    width: this.windowWidth
   },
   volText: {
     position: 'absolute',
