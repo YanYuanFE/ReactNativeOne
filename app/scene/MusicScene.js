@@ -8,7 +8,7 @@ import {
 
 import OneFlatList from '../component/OneFlatList';
 
-import { GET_MOVIE_LIST } from '../api/API';
+import { GET_MUSIC_LIST } from '../api/API';
 
 
 export default class MusicScene extends Component {
@@ -16,25 +16,25 @@ export default class MusicScene extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movieData: []
+      musicData: []
     };
   }
 
   componentDidMount() {
-    this.fetchMovieData();
+    this.fetchMusicData();
   }
 
-  fetchMovieData = () => {
-    fetch(GET_MOVIE_LIST)
+  fetchMusicData = () => {
+    fetch(GET_MUSIC_LIST)
       .then(res => res.json())
       .then(res => {
         console.log(res)
         this.setState({
-            movieData: res.data
+            musicData: res.data
         })
       })
       .catch(err => {
-        alert(`fetchMovieData: ${err}`);
+        alert(`fetchMusicData: ${err}`);
       })
   }
 
@@ -44,7 +44,7 @@ export default class MusicScene extends Component {
     return (
       <OneFlatList
         appNavigation = {appNavigation}
-        data = {this.state.movieData}
+        data = {this.state.musicData}
       />
     )
   }
@@ -58,7 +58,7 @@ export default class MusicScene extends Component {
   }
 
   render() {
-    return this.state.movieData ? this.renderDataList() : this.renderLoadingView();
+    return this.state.musicData ? this.renderDataList() : this.renderLoadingView();
   }
 
   

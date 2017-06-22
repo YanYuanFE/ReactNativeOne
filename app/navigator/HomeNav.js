@@ -8,6 +8,7 @@ import { StackNavigator,TabNavigator } from 'react-navigation';
 
 import OneScene from '../scene/OneScene';
 import ReadScene from '../scene/ReadScene';
+import MusicScene from '../scene/MusicScene';
 import MovieScene from '../scene/MovieScene';
 
 
@@ -20,100 +21,7 @@ const musicIconActive = require('../images/music_active.png');
 const movieIcon = require('../images/movie.png');
 const movieIconActive = require('../images/movie_active.png');
 
-class Home extends React.Component {
-  static navigationOptions = {
-    title:'一个',
-    tabBarLabel: 'Home',
-    tabBarIcon: ({ focused, tintColor }) => (
-      <Image
-        source={focused ? homeIconActive : homeIcon}
-        style={[styles.tabIcon, {tintColor: tintColor}]}
-      />
-    ),
-  };
 
-  render() {
-    return (
-      <Button
-        onPress={() => this.props.navigation.navigate('Home')}
-        title="Go to notifications"
-      />
-    );
-  }
-}
-
-class Music extends React.Component {
-  static navigationOptions = {
-    title:'一个音乐',
-    tabBarLabel: 'Music',
-    tabBarIcon: ({ focused, tintColor }) => (
-      <Image
-        source={focused ? musicIconActive : musicIcon}
-        style={[styles.tabIcon, {tintColor: tintColor}]}
-      />
-    ),
-  };
-
-  render() {
-    return (
-      <Button
-        onPress={() => this.props.navigation.goBack()}
-        title="Go back home"
-      />
-    );
-  }
-}
-
-class Read extends React.Component {
-  static navigationOptions = {
-    title:'一个阅读',
-    tabBarLabel: 'Read',
-    tabBarIcon: ({ focused, tintColor }) => (
-      <Image
-        source={focused ? readIconActive : readIcon}
-        style={[styles.tabIcon, {tintColor: tintColor}]}
-      />
-    ),
-  };
-
-  render() {
-    return (
-      <Button
-        onPress={() => this.props.navigation.goBack()}
-        title="Go back home"
-      />
-    );
-  }
-}
-
-class Movie extends React.Component {
-  static navigationOptions = {
-    title:'一个影视',
-    tabBarLabel: 'Movie',
-    tabBarIcon: ({ focused, tintColor }) => (
-      <Image
-        source={focused ? movieIconActive : movieIcon}
-        style={[styles.tabIcon, {tintColor: tintColor}]}
-      />
-    ),
-  };
-
-  render() {
-    return (
-      <Button
-        onPress={() => this.props.navigation.goBack()}
-        title="Go back home"
-      />
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  tabIcon: {
-    width: 50,
-    height: 50,
-  },
-});
 
 const HomeNav = TabNavigator({
   One: {
@@ -139,8 +47,15 @@ const HomeNav = TabNavigator({
     }
   },
   Music: {
-    title:'一个音乐',
-    screen: Music,
+    screen: MusicScene,
+    navigationOptions: {
+      tabBarIcon: ({ focused, tintColor }) => (
+        <Image
+          source={focused ? musicIconActive : musicIcon}
+          style={[styles.tabIcon, {tintColor: tintColor}]}
+        />
+      ),
+    }
   },
   Movie: {
     title:'一个影视',
@@ -165,6 +80,13 @@ const HomeNav = TabNavigator({
     style: {
       backgroundColor:'#ffffff',
     }
+  },
+});
+
+const styles = StyleSheet.create({
+  tabIcon: {
+    width: 50,
+    height: 50,
   },
 });
 
