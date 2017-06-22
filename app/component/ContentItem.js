@@ -13,7 +13,8 @@ import moment from 'moment';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 // 在react-native 设置moment.locale('zh-cn')无效，只能通过改moment.js源文件中的baseConfig配置中文
-// console.log(moment.locale());
+
+import MusicView from './MusicView';
 
 export default class ContentItem extends Component {
     
@@ -53,7 +54,7 @@ export default class ContentItem extends Component {
 
     getData = data => ({
         contentType: data.content_type,
-        movieName: data.content_type == this.contentMovie ? data.subtitle : 'unknow',
+        movieName: data.content_type == this.contentMovie ? data.subtitle : '',
         type: data.share_list.wx.title.split('|')[0].trim(),
         title: data.title,
         author: data.share_list.wx.desc.split(' ')[0].replace('/', ' / '),
@@ -66,9 +67,8 @@ export default class ContentItem extends Component {
     })
 
     render() {
-        console.log(this.props);
         const data = this.getData(this.props.data);
-        console.log(data)
+        
         return (
             <TouchableWithoutFeedback
                 onPress={() => this.props.onPress(data.url, data.type)}>
@@ -83,6 +83,9 @@ export default class ContentItem extends Component {
                                     <Image 
                                     style={[styles.xiamiImg,  {top: this.widthM2 -32 }]}
                                     source={require('../images/xiami.png')}/>
+                                    <MusicView
+                                        width={this.widthM2}
+                                        source={{uri: data.imgUrl}}/>
                                 </View>
                                 <View style={{flex: 1}}/>
                                 <Image 
