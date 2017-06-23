@@ -19,13 +19,30 @@ export default class Toolbar extends Component {
     };
   }
 
+  pressUser = () => {
+    this.navigate('User', {
+      title: '',
+    });
+  }
+
+  pressBack = () => {
+    this.props.navigation.goBack();
+  }
+
+  pressSearch = () => {
+    this.navigate('Search', {
+      title: '',
+    });
+  }
+
   render() {
     let inHome = this.props.inHome;
     let onlyLeft = this.props.onlyLeft;
 
     return (
       <View style = {[styles.box, this.props.bgColor ? {backgroundColor: this.props.bgColor,borderColor: 'rgba(0,0,0,0)'} : {}]}>
-        <TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={inHome ? this.pressUser : this.pressBack}>
           <View style={styles.iconBtn}>
             <Image style={styles.iconStyle} 
               source={inHome ? require('../images/user.png') : require('../images/back.png')} />
@@ -37,7 +54,8 @@ export default class Toolbar extends Component {
         <View>
           {
             onlyLeft ? (<View/>) : (
-              <TouchableWithoutFeedback>
+              <TouchableWithoutFeedback
+                onPress={inHome ? this.pressSearch : this.pressShare}>
                 <View style={styles.iconBtn}>
                   <Image style={styles.iconStyle}  
                     source={inHome ? require('../images/search.png') : require('../images/bubble_share.png')}/>

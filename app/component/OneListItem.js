@@ -10,6 +10,7 @@ import {
   Modal,
 } from 'react-native';
 
+import OneSceneImgPop from './OneSceneImgPop';
 
 export default class OneListItem extends Component {
   
@@ -56,6 +57,18 @@ export default class OneListItem extends Component {
 
     return (
       <View style={styles.itemContainer}>
+        <Modal
+          transparent={true}
+          animationType={'fade'}
+          visible={this.state.popVisible}
+          onRequestClose={() => {}}>
+          <OneSceneImgPop
+            imgSize={{height: this.state.imgHeight * 0.9, width: this.windowWidth * 0.9}}
+            imgUrl= {data.img_url}
+            volume={data.volume}
+            info={`${data.title} | ${data.pic_info}`}
+            onPress={this.changePopVisible}/>
+        </Modal>
         <Text style={styles.dateText}>{weather.date.replace(/-/g, ' / ')}</Text>
         <Text style={styles.cityText}>{`${weather.climate},${weather.city_name}`}</Text>
         <TouchableWithoutFeedback
