@@ -59,7 +59,7 @@ export default class OneScene extends Component {
   }
 
   fetchOne = id => {
-    const URL = GET_DAY_LIST.replace('id', id);
+    const URL = GET_DAY_LIST(id);
     console.log(URL);
 
     fetch(URL)
